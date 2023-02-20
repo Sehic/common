@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.18'
+    }
+
+    ext {
+        springDependencyVersion = '2.1.1.RELEASE'
+        grpcVersion = '1.45.1'
+        protobufVersion = '3.19.4'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+group 'com.reeinvent.backend'
+version '1.0'
+
+apply plugin: 'com.google.protobuf'
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    // Spring dependencies
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springDependencyVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springDependencyVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springDependencyVersion"
+    // gRPC
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+
+    // examples/advanced need this for JsonFormat
+    implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+    runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
+    implementation "io.grpc:grpc-netty:${grpcVersion}"
+    // Tests
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springDependencyVersion"
+    testImplementation "io.grpc:grpc-testing:${grpcVersion}"
+}
